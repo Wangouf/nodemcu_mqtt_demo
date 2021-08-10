@@ -44,6 +44,9 @@ void loop() {
     if (!client.connected()) {
         reconnect();
     }
+    if (WiFi.status() != WL_CONNECTED) {
+        connect();
+    }
     float h = dht.readHumidity();
     float t = dht.readTemperature();
     DynamicJsonDocument doc(50);
