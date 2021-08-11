@@ -17,7 +17,7 @@ const char userpwd[] = "0caee5543d57408f38ee096fa09e661660d4361e0039fcaa89ac88ef
 WiFiClient espClient;
 PubSubClient client(espClient);
 DHT dht(DHTPIN, DHTTYPE);
-void connect() {
+void WIFIconnect() {
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid,pwd);
     while (WiFi.status() != WL_CONNECTED)
@@ -25,7 +25,7 @@ void connect() {
         delay(500);
     }
 }
-void reconnect() {
+void MQreconnect() {
     while (!client.connected()) {
         if (client.connect(name,username,userpwd)) {
             client.publish(topic, "hello world");
@@ -37,17 +37,17 @@ void reconnect() {
 void setup() {
     Serial.begin(9600);
     dht.begin();
-    connect();
+    WIFIconnect();
     client.setServer(mqtt_server,1883);
     client.connect(name,username,userpwd);
 }
 
 void loop() {
     if (!client.connected()) {
-        reconnect();
+        MQreconnect();
     }
     if (WiFi.status() != WL_CONNECTED) {
-        connect();
+        WIFIconnect();
     }
     float h = dht.readHumidity();
     float t = dht.readTemperature();
