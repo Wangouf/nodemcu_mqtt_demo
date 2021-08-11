@@ -5,15 +5,13 @@
 #include "ArduinoJson.h"
 #define DHTPIN 2
 #define DHTTYPE DHT11
-#define SSID "AUSU-2.4G"
-#define PWD "#42Quk3*B-"
-const char topic[] = "OL9IA22UUE/esp8266/data";
-const char ssid[] = SSID;
-const char pwd[] = PWD;
-const char mqtt_server[] = "OL9IA22UUE.iotcloud.tencentdevices.com";
-const char name[] = "esp8266";
-const char username[] = "OL9IA22UUEesp8266;12010126;OQK5V;1664560867";
-const char userpwd[] = "0caee5543d57408f38ee096fa09e661660d4361e0039fcaa89ac88ef85881b5f;hmacsha256";
+#define ssid "AUSU-2.4G"
+#define pwd "#42Quk3*B-"
+#define topic "OL9IA22UUE/esp8266/data"
+#define mqtt_server "OL9IA22UUE.iotcloud.tencentdevices.com"
+#define name "esp8266"
+#define username "OL9IA22UUEesp8266;12010126;OQK5V;1664560867"
+#define userpwd "0caee5543d57408f38ee096fa09e661660d4361e0039fcaa89ac88ef85881b5f;hmacsha256"
 WiFiClient espClient;
 PubSubClient client(espClient);
 DHT dht(DHTPIN, DHTTYPE);
@@ -35,7 +33,7 @@ void MQreconnect() {
     }
 }
 void setup() {
-    Serial.begin(9600);
+//    Serial.begin(9600);
     dht.begin();
     WIFIconnect();
     client.setServer(mqtt_server,1883);
@@ -56,7 +54,7 @@ void loop() {
     doc["Humidity"] = h;
     String output;//e.g. {"Temperature":30.4,"Humidity":74}
     serializeJson(doc,output);
-    Serial.println(output.c_str());
+//    Serial.println(output.c_str());
     client.publish(topic,output.c_str());
-    delay(1000*30);
+    delay(1000*60*5);
 }
