@@ -5,9 +5,11 @@
 #include "ArduinoJson.h"
 #define DHTPIN 2
 #define DHTTYPE DHT11
+#define SSID "AUSU-2.4G"
+#define PWD "#42Quk3*B-"
 const char topic[] = "OL9IA22UUE/esp8266/data";
-const char ssid[] = "Redmi K40";
-const char pwd[] = "password";
+const char ssid[] = SSID;
+const char pwd[] = PWD;
 const char mqtt_server[] = "OL9IA22UUE.iotcloud.tencentdevices.com";
 const char name[] = "esp8266";
 const char username[] = "OL9IA22UUEesp8266;12010126;OQK5V;1664560867";
